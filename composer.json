@@ -1,0 +1,5 @@
+{
+    "name": "ahebrank/yeti_twig",
+    "description": "Provides support for magicyeti Twig extensions",
+    "type": "library"
+}
