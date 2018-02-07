@@ -12,10 +12,6 @@ class Yeti {
      * @return string
      */
     public static function src($src, $show_dims = TRUE) {
-
-        $info = self::parse_path($src);
-        $width = isset($info['width'])? $info['width'] : 'unk';
-        $height = isset($info['height'])? $info['height'] : 'unk';
         
         $hash = md5($src);
         $tmp = sys_get_temp_dir();
@@ -34,22 +30,28 @@ class Yeti {
         $data = file_get_contents($fn);
 
         if ($show_dims) {
+            $info = self::parse_path($src);
+            $width = isset($info['width'])? $info['width'] : 'unk';
+            $height = isset($info['height'])? $info['height'] : 'unk';
+
             $text = $width . " x " . $height;
             $im = imagecreatefromstring($data);
-            $color = imagecolorallocate($im, 255, 255, 255);
+            if ($im) {
+                $color = imagecolorallocate($im, 255, 255, 255);
 
-            $font = __DIR__ . "/../fonts/arial.ttf";
-            if (file_exists($font)) {
-                imagettftext($im, 36, 0, 30, 50, $color, $font, $text);
-            }
-            else {
-                imagestring($im, 5, 30, 30, $text, $color);
-            }
+                $font = __DIR__ . "/../fonts/arial.ttf";
+                if (file_exists($font)) {
+                    imagettftext($im, 36, 0, 30, 65, $color, $font, $text);
+                }
+                else {
+                    imagestring($im, 5, 30, 30, $text, $color);
+                }
 
-            ob_start (); 
-            imagejpeg ($im);
-            $data = ob_get_contents();
-            ob_end_clean();
+                ob_start (); 
+                imagejpeg ($im);
+                $data = ob_get_contents();
+                ob_end_clean();
+            }
         }
 
         $data64 = base64_encode($data);
