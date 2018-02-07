@@ -65,7 +65,7 @@ class Yeti {
     public static function replace_img($img) {
         if (preg_match('/src *= *[\'\"](.*)[\'\"]/', $img, $matches)) {
             $src = trim($matches[1]);
-            $img = str_replace($matches[0], self::src($src), $img);
+            $img = str_replace($matches[0], 'src="' . self::src($src) . '"', $img);
         }
         return $img;
     }
