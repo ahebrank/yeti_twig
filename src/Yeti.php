@@ -14,8 +14,8 @@ class Yeti {
     public static function src($src, $show_dims = TRUE) {
 
         $info = self::parse_path($src);
-        $width = isset($info['width'])? $info['width'] : 0;
-        $height = isset($info['height'])? $info['height'] : 0;
+        $width = isset($info['width'])? $info['width'] : 'unk';
+        $height = isset($info['height'])? $info['height'] : 'unk';
         
         $hash = md5($src);
         $tmp = sys_get_temp_dir();
@@ -78,7 +78,7 @@ class Yeti {
      */
     public static function parse_path($url) {
         $p = parse_url($url);
-        $path = explode('/', $p['path']);
+        $path = preg_split('/[\/x]/', trim($p['path'], '/'));
         
         $info = [];
         if (count($path) >= 2) {
