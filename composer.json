@@ -1,5 +1,8 @@
 {
     "name": "ahebrank/yeti_twig",
     "description": "Provides support for magicyeti Twig extensions",
-    "type": "library"
+    "type": "library",
+    "autoload": {
+        "psr-4": {"Newcity\\": "src/"}
+    }
 }
